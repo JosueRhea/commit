@@ -51,9 +51,8 @@ jobs:
               uses: tauri-apps/tauri-action@v0
 
             - name: 🚀 Upload Windows MSI
-              if: matrix.settings.host == 'windows-latest'
               uses: actions/upload-artifact@v3
               with:
                   name: Commit.msi
                   path: |
-                      target/release/bundle/msi/*.msi
+                      target/release/bundle/msi/Commit*.msi
