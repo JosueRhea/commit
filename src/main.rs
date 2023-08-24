@@ -3,7 +3,7 @@
 use anyhow::anyhow;
 use config::{Config, ConfigExt};
 use std::error::Error;
-use tauri::{generate_context, ActivationPolicy, Builder as Tauri};
+use tauri::{generate_context, Builder as Tauri};
 use tauri_autostart::ManagerExt;
 use tauri_plugin_autostart::{self as tauri_autostart};
 
@@ -33,8 +33,6 @@ fn main() {
 }
 
 fn setup_tauri(app: &mut tauri::App) -> Result<(), Box<(dyn Error + 'static)>> {
-	app.set_activation_policy(ActivationPolicy::Accessory);
-
 	window::main_window::create(&app.handle())?;
 	let settings_window = window::settings::create(&app.handle())?;
 

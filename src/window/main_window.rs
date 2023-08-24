@@ -6,17 +6,13 @@ use tauri_plugin_spotlight::ManagerExt as SpotlightExt;
 use crate::{
 	config::ConfigExt,
 	repo, shortcuts,
-	window::{self, TransparentWindow},
+	window::{self},
 };
 
 pub fn create(app: &AppHandle) -> anyhow::Result<Window> {
 	let main_window = app
 		.get_window(window::MAIN)
 		.ok_or_else(|| anyhow!("Window not found"))?;
-
-	main_window.make_transparent().map_err(|_| {
-		anyhow!("Unsupported platform! 'apply_vibrancy' is only supported on macOS")
-	})?;
 
 	Ok(main_window)
 }
