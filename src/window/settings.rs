@@ -1,4 +1,4 @@
-use anyhow::anyhow;
+// use anyhow::anyhow;
 use tauri::{AppHandle, Manager, Window, WindowBuilder, WindowUrl};
 
 use crate::window;
@@ -11,7 +11,6 @@ pub fn create(app: &AppHandle) -> anyhow::Result<Window> {
 			.visible(false)
 			.closable(true)
 			.transparent(true)
-			.always_on_top(true)
 			.title("Settings - Commit")
 			.initialization_script("window.__COMMIT__ = { page: 'settings' };")
 			.build()?;

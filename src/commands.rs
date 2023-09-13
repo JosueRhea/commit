@@ -1,9 +1,6 @@
 use git2::Repository;
 use std::{path::PathBuf, process::Command};
-use tauri::{
-	api::{dialog, notification::Notification},
-	AppHandle, Invoke, State, Window, Wry,
-};
+use tauri::{api::notification::Notification, AppHandle, Invoke, State, Window, Wry};
 use tauri_plugin_autostart::ManagerExt;
 
 use crate::{
@@ -96,7 +93,9 @@ fn update_config(
 			.map_err(|_| "Failed to disable autostart.")?;
 	}
 
-	settings_window.emit("config", new_config).unwrap();
+	settings_window
+		.emit("config", new_config)
+		.expect("Error sending event");
 
 	Notification::new(&app.config().tauri.bundle.identifier)
 		.title("Settings")
@@ -114,15 +113,16 @@ fn get_config(config: State<GetConfig>, window: Window) {
 	window.emit("config", config.clone()).unwrap();
 }
 
-#[tauri::command]
-fn select_folder(window: Window) {
-	dialog::FileDialogBuilder::default().pick_folder(move |folder_path| {
-		if let Some(folder_path) = folder_path {
-			window.emit("folder_selected", folder_path).unwrap();
-		}
-	});
-}
+// #[tauri::command]
+// fn select_folder(window: Window) {
+// 	print!("Select folder handler");
+// 	dialog::FileDialogBuilder::default().pick_folder(move |folder_path| {
+// 		if let Some(folder_path) = folder_path {
+// 			window.emit("folder_selected", folder_path).unwrap();
+// 		}
+// 	});
+// }
 
 pub fn handler() -> impl Fn(Invoke<Wry>) + Send + Sync + 'static {
-	tauri::generate_handler![commit, update_config, select_folder, get_config]
+	tauri::generate_handler![commit, update_config, get_config]
 }

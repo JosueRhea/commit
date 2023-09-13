@@ -1,6 +1,5 @@
-import { FC, useEffect } from 'react'
-import { invoke } from '@tauri-apps/api/tauri'
-import { listen } from '@tauri-apps/api/event'
+import { FC } from 'react'
+import { open } from '@tauri-apps/api/dialog'
 import { PlusIcon, TrashIcon } from '@primer/octicons-react'
 
 type Props = {
@@ -8,17 +7,35 @@ type Props = {
 	onChange: (value: string[]) => void
 }
 const FolderSelector: FC<Props> = ({ value, onChange }) => {
-	useEffect(() => {
-		const unlisten = listen<string>('folder_selected', ({ payload }) => onChange([...value, payload]))
+	// useEffect(() => {
+	// 	const unlisten = listen<string>('folder_selected', ({ payload }) => {
+	// 		console.log(payload, value)
+	// 		onChange([...value, payload])
+	// 	})
 
-		return () => {
-			unlisten.then(f => f())
+	// 	return () => {
+	// 		unlisten.then(f => f())
+	// 	}
+	// }, [onChange])
+
+	console.log(value)
+
+	const handleOnAdFolder = async () => {
+		console.log('Hello handle')
+		const selected = await open({
+			multiple: false,
+			directory: true,
+		})
+		if (selected) {
+			if (typeof selected === 'string') {
+				onChange([...value, selected])
+			}
 		}
-	}, [onChange])
+	}
 
 	return (
 		<button
-			onClick={() => invoke('select_folder')}
+			onClick={handleOnAdFolder}
 			className="p-2 px-2 border dark:border-white/5 rounded bg-black/[0.01] dark:bg-white/[0.01] w-full group/box"
 		>
 			<div className="space-y-2">

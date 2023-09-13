@@ -29,6 +29,7 @@ decorations = false
 [tauri.allowlist]
 all = false
 window = { startDragging = true }
+dialog = { all =  true }
 
 [tauri.system-tray]
 iconAsTemplate = true

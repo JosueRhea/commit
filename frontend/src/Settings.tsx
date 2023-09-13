@@ -23,6 +23,7 @@ const Settings = () => {
 	}, [config])
 
 	const save = useCallback((newConfig: Config) => {
+		console.log(newConfig)
 		invoke('update_config', { newConfig })
 	}, [])
 
