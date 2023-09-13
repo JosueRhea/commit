@@ -38,7 +38,7 @@ iconPath = "icons/menubar.png"
 
 [tauri.bundle]
 active = true
-targets = ["app", "dmg"]
+targets = ["app", "dmg", "msi"]
 category = "DeveloperTool"
 macOS = { license = "LICENSE" }
 identifier = "build.miguel.commit"
